@@ -1,0 +1,7 @@
+aniso8601==8.0.0
+click==7.1.2
+Flask==1.1.2
+Flask-RESTful==0.3.8
+base64
+pycryptodome
+pycrypto
