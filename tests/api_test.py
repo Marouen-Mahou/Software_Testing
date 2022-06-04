@@ -73,6 +73,41 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.text, "\"Hash not found\"\n")
 
+    #POST request to /encode/16
+    def test_7_encode_decode_16(self):
+        message = "Hello World"
+
+        r = requests.post("{}/encode/16".format(ApiTest.API_URL), json={"message": message})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text, "\"48656C6C6F20576F726C64\"\n")
+
+        r = requests.post("{}/decode/16".format(ApiTest.API_URL), json={"message": "48656C6C6F20576F726C64"})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text.replace('"', '').strip(), message)
+
+    #POST request to /encode/32
+    def test_8_encode_decode_32(self):
+        message = "Hello World"
+
+        r = requests.post("{}/encode/32".format(ApiTest.API_URL), json={"message": message})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text, "\"JBSWY3DPEBLW64TMMQ======\"\n")
+
+        r = requests.post("{}/decode/32".format(ApiTest.API_URL), json={"message": "JBSWY3DPEBLW64TMMQ======"})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text.replace('"', '').strip(), message)
+
+    #POST request to /encode/64
+    def test_9_encode_decode_64(self):
+        message = "Hello World"
+
+        r = requests.post("{}/encode/64".format(ApiTest.API_URL), json={"message": message})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text.replace('"', '').strip(), "SGVsbG8gV29ybGQ=")
+
+        r = requests.post("{}/decode/64".format(ApiTest.API_URL), json={"message": r.text})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text.replace('"', '').strip(), message)
 
 if __name__ == '__main__':
     unittest.main()
