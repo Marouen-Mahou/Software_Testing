@@ -46,3 +46,36 @@ class Register(Resource):
             'phone': dict_data['phone']
         }
 
+class Login(Resource):
+    def post(self):
+        ## Get the request_body
+        email = register_post_args.parse_args()["email"]
+        password = Hash('sha256',register_post_args.parse_args()["password"])
+
+        db_connection = current_app.config["DATABASE_CON"]
+
+        db_connection.row_factory = sqlite3.Row
+        cursor = db_connection.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users where email =?", (email,)
+        )
+
+        data = cursor.fetchone()
+
+        if data == None:
+            return {
+                "message":"Wrong email"
+            }
+
+        dict_data = dict(data)
+
+        if dict_data['password'] == password:
+            return {
+                "message": "Logged in"
+            }
+
+        return {
+                "message": "Wrong password"
+            }
+

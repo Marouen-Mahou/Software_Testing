@@ -1,5 +1,7 @@
 import hashlib
 import base64
+import sqlite3
+from flask import current_app
 
 
 ### CRACK FUNCTIONS
@@ -73,6 +75,17 @@ def Decode(type, message):
     return "Invalid Type"
 
 
+# Attacks
+def All_Attacks(cursor):
+    data = cursor.fetchall()
+
+    attacks = []
+
+    for d in data:
+        dict_data = dict(d)
+        attacks.append({"name": dict_data["name"], "description": dict_data["description"]})
+
+    return attacks
 
 
 

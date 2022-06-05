@@ -1,5 +1,11 @@
 import unittest
-from functions import Crack, Hash, Encode, Decode
+from unittest.mock import patch
+
+from flask import current_app
+
+from functions import Crack, Hash, Encode, Decode, All_Attacks
+
+import sqlite3
 
 class UnitTest(unittest.TestCase):
 

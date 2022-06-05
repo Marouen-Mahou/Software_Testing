@@ -11,10 +11,13 @@ from decrypt import DecryptDES, DecryptAES, DecryptRSA, DecryptGamal
 from hashing import HashMD5, HashSHA1, HashSHA256
 from cracking import CrackMD5, CrackSHA1, CrackSHA256
 
-from  authentification import Register
+from authentification import Register, Login
+
+from attacks import Attacks
 
 import os
 import sqlite3
+
 
 def create_app(name):
     app = Flask(__name__)
@@ -55,6 +58,9 @@ def create_app(name):
     api.add_resource(CrackSHA256, "/crack/sha256")
 
     api.add_resource(Register, "/register")
+    api.add_resource(Login, "/login")
+
+    api.add_resource(Attacks, "/attacks")
     return app
 
 
