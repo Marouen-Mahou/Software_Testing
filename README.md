@@ -1,4 +1,4 @@
-# Software_Testing
+# Software Testing
 
 ## Unit tests
 UNIT TESTING is a type of software testing where individual units or components of a software are tested. 
@@ -148,10 +148,80 @@ def test_register(test_client):
 
 Final results :
 
+## End to end tests
+
+End-to-end testing is a methodology used in the software development lifecycle (SDLC) to test the functionality and performance of an application under product-like circumstances and data to replicate live settings. The goal is to simulate what a real user scenario looks like from start to finish. The completion of this testing is not only to validate the system under test, but to also ensure that its sub-systems work and behave as expected. 
+
+### How ?
+In our case we are going to test the API calls when the server is running ( Production like environment ) and check if the server is behaving as expected or not. We are going to rely on the same package as the unit tests and the requests package of python to perform the HTTP requests to the running server. 
+
+ The tested functions are : 
+- Login :white_check_mark:
+- Register :white_check_mark:
+- Hashing : :white_check_mark: MD5 - :white_check_mark: SHA1 - :white_check_mark: SHA256
+- Cracking : :white_check_mark: MD5 - :white_check_mark: SHA1 - :white_check_mark: SHA256
+- Encoding : :white_check_mark: Base8 - :white_check_mark: Base16 - :white_check_mark: Base32
+- Cracking : :white_check_mark: Base8 - :white_check_mark: Base16 - :white_check_mark: Base32
 
 
+ ```python
+ class ApiTest(unittest.TestCase):
+    API_URL = "http://127.0.0.1:5000/"
+    
+    def test_register(test_client):
+        # Given
+        request_payload = {
+            "username": "userTest",
+            "phone": "213456",
+            "email": "email@gmail.com",
+            "password": "Hello"
+        }
+
+        expected_body = {
+            "user_id": 1,
+            "username": "userTest",
+            "phone": 213456,
+            "email": "email@gmail.com",
+        }
+
+        expected_status_code = 200
+
+        expected_body_keys = ["user_id", "username", "phone", "email"]
+
+        # When
+        response = test_client.post('/register', json=request_payload)
+
+        # Then
+        assert expected_status_code == response.status_code
+        assert response.json | expected_body == response.json
+        assert set(expected_body_keys) == response.json.keys()
+        assert int == type(response.json["user_id"])
+        
+    #POST request to /hash/md5 returns hash of TEST
+    def test_1_hash_md5(self):
+        message = "TEST"
+        expected = "\"033bd94b1168d7e4f0d644c3c95e35bf\"\n"
+
+        r = requests.post("{}/hash/md5".format(ApiTest.API_URL), {"message": message})
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(expected,r.text)
+```
+
+The final results : 
 
 
+## User Acceptance Test
+User Acceptance Testing (UAT), also known as beta or end-user testing, is defined as testing the software by the user or client to determine whether it can be accepted or not. This is the final testing performed once the functional, system and regression testing are completed.
 
+The main purpose of this testing is to validate the software against the business requirements. This validation is carried out by the end-users who are familiar with the business requirements.
 
+UAT, alpha and beta testing are different types of acceptance testing.
+
+As the user acceptance test is the last testing that is carried out before the software goes live, obviously this is the last chance for the customer to test the software and measure if it is fit for the purpose.
+
+### How?
+In our case we have gave the API access to the futur user ( My colleagues) which are familiar with the Security field buisness requirements to validate some use cases
+ and make sure that our server fullfils the right needs of the buisness requirements. 
+The document of the User Acceptance Test is found in the file user_acceptance_test.pdf. 
 
