@@ -180,6 +180,18 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(expected, result)
 
 
+    @patch("loginpage.DAO")
+    def test_all_attack(self, mocked_object) :
+        mocked_object().getuser.return_value=(1,"souheil","benslamasouheil@gmail.com","hellopassword")
+        #given
+        expected_username ='souheil'
+        #when
+        result= get_username("benslamasouheil@gmail.com")
+        print(result)
+        #then
+        self.assertEqual(expected_username,result)
+
+
 
 if __name__ == '__main__':
     unittest.main()

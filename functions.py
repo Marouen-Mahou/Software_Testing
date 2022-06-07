@@ -5,6 +5,9 @@ from flask import current_app
 
 
 ### CRACK FUNCTIONS
+import DAO
+
+
 def Crack(type, message, lines):
     if(type == 'md5'):
         for line in lines:
@@ -77,13 +80,8 @@ def Decode(type, message):
 
 # Attacks
 def All_Attacks(cursor):
-    data = cursor.fetchall()
 
-    attacks = []
-
-    for d in data:
-        dict_data = dict(d)
-        attacks.append({"name": dict_data["name"], "description": dict_data["description"]})
+    attacks = DAO.getAllAttacksData()
 
     return attacks
 

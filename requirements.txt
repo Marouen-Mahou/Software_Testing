@@ -6,3 +6,5 @@ pycryptodome
 pycrypto
 flask_socketio
 pytest
+pyautogui
+pyperclip
