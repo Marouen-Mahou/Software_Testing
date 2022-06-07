@@ -22,7 +22,7 @@ def test_client():
     context.pop()
 
 
-def test_create_user(test_client):
+def test_register(test_client):
     # Given
     request_payload = {
         "username": "userTest",
