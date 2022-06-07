@@ -83,7 +83,7 @@ using the patch of the unittest.mock which allows us to simulate the Data Base c
 
 The final result of the unittests :
 
-
+![Unit test result image](images/unit_tests_result.PNG?raw=true)
 
 
 ## Integration tests
@@ -168,6 +168,8 @@ def test_register(test_client):
 
 Final results :
 
+![Integration test result image](images/integration_tests_result.PNG?raw=true)
+
 ## End to end tests
 
 End-to-end testing is a methodology used in the software development lifecycle (SDLC) to test the functionality and performance of an application under product-like circumstances and data to replicate live settings. The goal is to simulate what a real user scenario looks like from start to finish. The completion of this testing is not only to validate the system under test, but to also ensure that its sub-systems work and behave as expected. 
@@ -230,6 +232,7 @@ In our case we are going to test the API calls when the server is running ( Prod
 
 The final results : 
 
+![End to end test result image](images/end_to_end_tests_result.PNG?raw=true)
 
 ## User Acceptance Test
 User Acceptance Testing (UAT), also known as beta or end-user testing, is defined as testing the software by the user or client to determine whether it can be accepted or not. This is the final testing performed once the functional, system and regression testing are completed.
@@ -243,5 +246,5 @@ As the user acceptance test is the last testing that is carried out before the s
 ### How?
 In our case we have gave the API access to the futur user ( My colleagues) which are familiar with the Security field buisness requirements to validate some use cases
  and make sure that our server fullfils the right needs of the buisness requirements. 
-The document of the User Acceptance Test is found in the file user_acceptance_test.pdf. 
+The document of the User Acceptance Test is found in the file ***tests/user_acceptance_test.pdf***. 
 
