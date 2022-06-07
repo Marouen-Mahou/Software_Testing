@@ -63,7 +63,27 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(expected, result)
 ```
 
+In some cases like the attacks list there is a call to the Data Base but we are doing unit tests so we have to mock the result of the database call 
+using the patch of the unittest.mock which allows us to simulate the Data Base call without actually calling the Data Base.
+
+
+```python
+    @patch("functions.get_all_attacks_data", return_value=[{'name': 'Denial-of-Service', 'description': 'DoS attacks work by flooding systems, servers, and/or networks with traffic to overload resources and bandwidth.'}])
+    def test_all_attack(self, mock_attacks):
+
+        # given
+        expected_len = 1
+
+        # when
+        result = all_attacks()
+
+        # then
+        self.assertEqual(expected_len, len(result))
+```
+
 The final result of the unittests :
+
+
 
 
 ## Integration tests
