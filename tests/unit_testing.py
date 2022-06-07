@@ -3,30 +3,35 @@ from unittest.mock import patch
 
 from flask import current_app
 
-from functions import Crack, Hash, Encode, Decode, All_Attacks
+from functions import Crack, Hash, Encode, Decode, all_attacks
+
+import functions
+from attacks import Attacks
 
 import sqlite3
 
+
 class UnitTest(unittest.TestCase):
 
-    #TEST CRACK FUNCTION with md5 type
+    # TEST CRACK FUNCTION with md5 type
     def test_1_crack_md5(self):
-        #When exists
+        # When exists
         message = "033bd94b1168d7e4f0d644c3c95e35bf"
         lines = ["Test", "Hello", "TEST"]
         expected = "TEST"
 
         result = Crack('md5', message, lines)
+
         self.assertEqual(expected, result)
 
-        #When doesn't exist
+        # When doesn't exist
         message = "033bd94b1168d7e4f0d644c3c95e35bf"
         lines = ["Test", "Hello"]
         expected = "Hash not found"
 
         result = Crack('md5', message, lines)
-        self.assertEqual(expected, result)
 
+        self.assertEqual(expected, result)
 
     # TEST CRACK FUNCTION with sha1 type
     def test_2_crack_sha1(self):
@@ -106,13 +111,12 @@ class UnitTest(unittest.TestCase):
         result = Hash('sha512', message)
         self.assertEqual(expected, result)
 
-
     # TEST ENCODE FUNCTION with 16 base
     def test_9_encode_16(self):
         message = "Hello World"
         expected = "48656C6C6F20576F726C64"
 
-        result = Encode("16",message)
+        result = Encode("16", message)
 
         self.assertEqual(expected, result)
 
@@ -121,7 +125,7 @@ class UnitTest(unittest.TestCase):
         message = "Hello World"
         expected = "JBSWY3DPEBLW64TMMQ======"
 
-        result = Encode("32",message)
+        result = Encode("32", message)
 
         self.assertEqual(expected, result)
 
@@ -148,7 +152,7 @@ class UnitTest(unittest.TestCase):
         message = "48656C6C6F20576F726C64"
         expected = "Hello World"
 
-        result = Decode("16",message)
+        result = Decode("16", message)
 
         self.assertEqual(expected, result)
 
@@ -157,7 +161,7 @@ class UnitTest(unittest.TestCase):
         message = "JBSWY3DPEBLW64TMMQ======"
         expected = "Hello World"
 
-        result = Decode("32",message)
+        result = Decode("32", message)
 
         self.assertEqual(expected, result)
 
@@ -179,18 +183,17 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
+    @patch("functions.get_all_attacks_data", return_value=[{'name': 'Denial-of-Service', 'description': 'DoS attacks work by flooding systems, servers, and/or networks with traffic to overload resources and bandwidth.'}])
+    def test_all_attack(self, mock_attacks):
 
-    @patch("loginpage.DAO")
-    def test_all_attack(self, mocked_object) :
-        mocked_object().getuser.return_value=(1,"souheil","benslamasouheil@gmail.com","hellopassword")
-        #given
-        expected_username ='souheil'
-        #when
-        result= get_username("benslamasouheil@gmail.com")
-        print(result)
-        #then
-        self.assertEqual(expected_username,result)
+        # given
+        expected_len = 1
 
+        # when
+        result = all_attacks()
+
+        # then
+        self.assertEqual(expected_len, len(result))
 
 
 if __name__ == '__main__':

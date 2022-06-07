@@ -5,7 +5,7 @@ from flask import current_app
 
 
 ### CRACK FUNCTIONS
-import DAO
+from DAO import get_all_attacks_data
 
 
 def Crack(type, message, lines):
@@ -79,11 +79,15 @@ def Decode(type, message):
 
 
 # Attacks
-def All_Attacks(cursor):
+def all_attacks():
+    try:
+        attacks = get_all_attacks_data()
+        return attacks
+    except Exception as e:
+        print("exception")
+        print(e)
 
-    attacks = DAO.getAllAttacksData()
 
-    return attacks
 
 
 
